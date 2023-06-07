@@ -1,7 +1,7 @@
 import os
 
-import utils
 import output
+import utils
 
 if __name__ == '__main__':
     if len(os.sys.argv) < 2:
@@ -9,8 +9,5 @@ if __name__ == '__main__':
         exit(1)
     part_name = str(os.sys.argv[1])
     dev = utils.get_devices()
-    if dev is None:
-        output.print_red('没有检测到设备')
-        exit(4)
     pid = utils.get_pid(part_name)
     os.system(f'adb -s {dev} shell logcat --pid={pid}')

@@ -46,7 +46,12 @@ def get_devices():
         return valid_devices[0][0]
     for i, valid in enumerate(valid_devices):
         print(f'{i}. {valid}')
-    return valid_devices[int(input('输入对应设备的序列号：'))][0]
+    while True:
+        device_index = int(input('输入对应设备的序列号：'))
+        if device_index == 0 or device_index >= len(valid_devices):
+            continue
+        else:
+            return valid_devices[device_index][0]
 
 
 def get_pid(part_name):
@@ -67,7 +72,12 @@ def get_pid(part_name):
             return pids[0]
         for i, valid in enumerate(pids):
             print(f'{i}. {valid}')
-        return pids[int(input('输入对应进程的序列号：'))][0]
+        while True:
+            pid_index = int(input('输入对应进程的序列号：'))
+            if pid_index == 0 or pid_index >= len(pids):
+                continue
+            else:
+                return pids[pid_index]
 
 
 def get_package(part_name):
@@ -88,7 +98,12 @@ def get_package(part_name):
             return packages[0]
         for i, valid in enumerate(packages):
             print(f'{i}. {valid}')
-        return packages[int(input('输入对应包的序列号：'))]
+        while True:
+            package_index = int(input('输入对应包的序列号：'))
+            if package_index == 0 or package_index >= len(packages):
+                continue
+            else:
+                return packages[package_index]
 
 
 def get_ip(devices=None):

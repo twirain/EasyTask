@@ -9,13 +9,7 @@ if __name__ == '__main__':
         exit(1)
     part_name = str(os.sys.argv[1])
     dev = utils.get_devices()
-    if dev is None:
-        output.print_red('没有检测到设备')
-        exit(4)
     package = utils.get_package(part_name)
-    if package is None:
-        output.print_red('应用包名不存在')
-        exit(2)
     with os.popen(f'adb -s {dev} shell pm path {package}') as p:
         apk_device_path = p.read().strip('package:')
         local_apk_path = os.path.join(os.getcwd(), 'base.apk')

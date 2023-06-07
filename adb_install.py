@@ -1,7 +1,7 @@
 import os
 
-import utils
 import output
+import utils
 
 if __name__ == '__main__':
     if len(os.sys.argv) < 2:
@@ -15,7 +15,4 @@ if __name__ == '__main__':
         output.print_red('非法安装包文件')
         exit(3)
     dev = utils.get_devices()
-    if dev is None:
-        output.print_red('没有检测到设备')
-        exit(4)
     os.system(f'adb -s {dev} install {apk_path}')
