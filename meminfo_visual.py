@@ -1,6 +1,7 @@
 import argparse
 import os.path
 
+import chardet
 import numpy as np
 from matplotlib import pyplot as plt
 
@@ -49,7 +50,9 @@ if __name__ == '__main__':
     app_summary_datas = {}
     objects_datas = {}
     for input_file in args.files:
-        with open(input_file, mode='r', encoding='UTF-16') as f:
+        with open(input_file, 'rb') as f:
+            encoding = chardet.detect(f.read())['encoding']
+        with open(input_file, mode='r', encoding=encoding) as f:
             meminfo = f.read()
             app_summary_datas[os.path.basename(f.name)] = meminfo_utils.parse_app_summary(meminfo)
             objects_datas[os.path.basename(f.name)] = meminfo_utils.parse_objects(meminfo)
