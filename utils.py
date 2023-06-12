@@ -100,7 +100,7 @@ def get_package(part_name):
             print(f'{i}. {valid}')
         while True:
             package_index = int(input('输入对应包的序列号：'))
-            if package_index == 0 or package_index >= len(packages):
+            if package_index < 0 or package_index >= len(packages):
                 continue
             else:
                 return packages[package_index]
