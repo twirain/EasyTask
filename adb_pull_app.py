@@ -14,5 +14,7 @@ if __name__ == '__main__':
         apk_device_path = p.read().strip('package:')
         local_apk_path = os.path.join(os.getcwd(), 'base.apk')
         pull_ret = os.system(f'adb -s {dev} pull {apk_device_path} {local_apk_path}')
+        new_apk_path = local_apk_path.replace('base.apk', f'{package}.apk')
+        os.rename(local_apk_path, new_apk_path)
         if pull_ret == 0:
-            print(f'应用已保存到：{local_apk_path}')
+            print(f'应用已保存到：{new_apk_path}')
