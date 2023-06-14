@@ -9,5 +9,5 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     dev = utils.get_devices()
-    package = utils.get_package(args.package_name)
+    package = utils.get_package(args.package_name, dev)
     os.system(f'adb -s {dev} shell pm clear {package}')

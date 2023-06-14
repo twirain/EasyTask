@@ -9,7 +9,7 @@ if __name__ == '__main__':
         exit(1)
     part_name = str(os.sys.argv[1])
     dev = utils.get_devices()
-    package = utils.get_package(part_name)
+    package = utils.get_package(part_name, dev)
     with os.popen(f'adb -s {dev} shell pm path {package}') as p:
         apk_device_path = p.read().strip('package:')
         local_apk_path = os.path.join(os.getcwd(), 'base.apk')

@@ -48,22 +48,22 @@ def get_devices():
         print(f'{i}. {valid}')
     while True:
         device_index = int(input('输入对应设备的序列号：'))
-        if device_index == 0 or device_index >= len(valid_devices):
+        if device_index < 0 or device_index >= len(valid_devices):
             continue
         else:
             return valid_devices[device_index][0]
 
 
-def get_pid(part_name):
+def get_pid(part_name, device=None):
     """
     列出匹配的`part_name`进程，选择后返回该进程id
     :param part_name: 用于匹配的部分进程名
+    :param device: 设备序列号
     :return:
     """
-    dev = get_devices()
-    if dev is None:
-        return None
-    with os.popen(f'adb -s {dev} shell ps -o PID,name') as p:
+    if device is None:
+        device = get_devices()
+    with os.popen(f'adb -s {device} shell ps -o PID,name') as p:
         ret = p.read()
         pids = re.findall(rf'(\d+)\s(.*{part_name}.*)', ret)
         if len(pids) == 0:
@@ -74,22 +74,22 @@ def get_pid(part_name):
             print(f'{i}. {valid}')
         while True:
             pid_index = int(input('输入对应进程的序列号：'))
-            if pid_index == 0 or pid_index >= len(pids):
+            if pid_index < 0 or pid_index >= len(pids):
                 continue
             else:
-                return pids[pid_index]
+                return pids[pid_index][0]
 
 
-def get_package(part_name):
+def get_package(part_name, device=None):
     """
     列出匹配的`part_name`应用包名，选择后返回该包名
     :param part_name: 用于匹配的部分包名
+    :param device: 设备序列号
     :return:
     """
-    dev = get_devices()
-    if dev is None:
-        return None
-    with os.popen(f'adb -s {dev} shell pm list package') as p:
+    if device is None:
+        device = get_devices()
+    with os.popen(f'adb -s {device} shell pm list package') as p:
         ret = p.read()
         packages = re.findall(rf'package:(.*{part_name}.*)', ret)
         if len(packages) == 0:
@@ -106,17 +106,14 @@ def get_package(part_name):
                 return packages[package_index]
 
 
-def get_ip(devices=None):
+def get_ip(device=None):
     """
     返回设备所在局域网的ip
     :return:
     """
-    dev = devices
-    if dev is None:
-        dev = get_devices()
-        if dev is None:
-            return None
-    with os.popen(f'adb -s {dev} shell ip addr show wlan0') as p:
+    if device is None:
+        device = get_devices()
+    with os.popen(f'adb -s {device} shell ip addr show wlan0') as p:
         ret = p.read()
         ip_ret = re.search(r'inet\s([\d.]+)', ret)
         if ip_ret is None:

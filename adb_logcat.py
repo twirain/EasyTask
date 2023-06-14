@@ -9,5 +9,5 @@ if __name__ == '__main__':
         exit(1)
     part_name = str(os.sys.argv[1])
     dev = utils.get_devices()
-    pid = utils.get_pid(part_name)
+    pid = utils.get_pid(part_name, dev)
     os.system(f'adb -s {dev} shell logcat --pid={pid}')

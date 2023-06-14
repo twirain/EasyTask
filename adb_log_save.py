@@ -12,7 +12,7 @@ if __name__ == '__main__':
         exit(1)
     part_name = str(os.sys.argv[1])
     dev = utils.get_devices()
-    pid = utils.get_pid(part_name)
+    pid = utils.get_pid(part_name, dev)
     os.system(f'adb -s {dev} shell rm {device_log_path}')
     log_ret = os.system(f'adb -s {dev} shell logcat --pid={pid} -f {device_log_path} -d')
     if log_ret == 0:

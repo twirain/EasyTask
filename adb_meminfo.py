@@ -10,9 +10,9 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     package_name = args.packageName
-    package = utils.get_package(package_name)
     dev = utils.get_devices()
-    pid = utils.get_pid(package_name)
+    package = utils.get_package(package_name, dev)
+    pid = utils.get_pid(package_name, dev)
 
     dump_ret = os.system(f'adb -s {dev} shell dumpsys meminfo {pid} > {args.output}')
     if dump_ret == 0:
