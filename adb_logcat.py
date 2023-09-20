@@ -14,10 +14,11 @@ if __name__ == '__main__':
     specs = args.filter_specs
 
     filter_specs = io.StringIO()
-    for spec in specs:
-        if re.match(r'(.+):(V|D|I|W|E|F)', spec):
-            filter_specs.write(spec)
-            filter_specs.write(' ')
+    if specs is not None:
+        for spec in specs:
+            if re.match(r'(.+):(V|D|I|W|E|F)', spec):
+                filter_specs.write(spec)
+                filter_specs.write(' ')
 
     dev = utils.get_devices()
     pid = utils.get_pid(args.name, dev)
